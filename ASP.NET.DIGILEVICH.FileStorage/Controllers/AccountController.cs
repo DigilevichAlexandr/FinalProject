@@ -453,8 +453,19 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 Session["Lastfilename"] = fileName;
                 //var db = new 
                 var db = new FileContext();
-                db.StoredFiles.Add(new StoredFile() {Name=fileName,UserName = User.Identity.Name.ToString() });
-                db.SaveChanges();               
+                try
+                {
+                        db.StoredFiles.Add(new StoredFile() {Name=fileName,UserName = User.Identity.Name.ToString() });
+                }
+                catch
+                {
+                    return View();
+                }
+                finally
+                {
+                    db.SaveChanges();
+                }
+                               
             }
             return View();
         }
