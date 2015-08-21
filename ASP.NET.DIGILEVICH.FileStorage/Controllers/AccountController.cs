@@ -449,22 +449,28 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 //dir.CreateSubdirectory("Subdir");
                 string path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath+"Files\\"+User.Identity.Name.ToString();
                 Directory.CreateDirectory(path);
-                upload.SaveAs(Server.MapPath("~/Files/"+ User.Identity.Name.ToString()+"/"+fileName));
-                Session["Lastfilename"] = fileName;
+                upload.SaveAs(Server.MapPath("~/Files/"+ User.Identity.Name.ToString()+"/"+fileName));                
                 //var db = new 
                 var db = new FileContext();
-                try
+                //try
+                //{
+                var role = db.StoredFiles.Where(f => f.Name == fileName).FirstOrDefault();
+                if (role != null)
                 {
-                        db.StoredFiles.Add(new StoredFile() {Name=fileName,UserName = User.Identity.Name.ToString() });
-                }
-                catch
-                {
+                    Session["Lastfilename"] = "";
                     return View();
                 }
-                finally
-                {
+                Session["Lastfilename"] = fileName;
+                db.StoredFiles.Add(new StoredFile() {Name=fileName,UserName = User.Identity.Name.ToString() });
+                //}
+                //catch
+                //{
+                //    return View();
+                //}
+                //finally
+                //{
                     db.SaveChanges();
-                }
+                //}
                                
             }
             return View();
@@ -483,7 +489,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         public ActionResult AllFiles()
         {
             var db = new FileContext();
-            return View(db.StoredFiles);
+            return View(db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString()));
         }
 
         #region Helpers
