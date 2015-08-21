@@ -3,7 +3,7 @@
     ViewBag.Title = "Upload";
 }
 
-<div>Last uploaded file@Session["Lastfilename"]</div>
+<div>Last uploaded file @Session["Lastfilename"]</div>
 
 <h3>Выберите файл для загрузки</h3>
 @using (Html.BeginForm("Upload", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
