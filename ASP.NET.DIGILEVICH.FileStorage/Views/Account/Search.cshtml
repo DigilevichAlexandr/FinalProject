@@ -1,19 +1,11 @@
 ﻿@model IEnumerable<ASP.NET.DIGILEVICH.FileStorage.Models.StoredFile>
 
 @{
-    ViewBag.Title = "AllFiles";
+    ViewBag.Title = "Search";
 }
 
-<h2>AllFiles</h2>
+<h2>Найденные файлы</h2>
 
-<p>
-    <h3>Поиск Файлов</h3>
-    @using (Html.BeginForm("Search", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <input type="text" name="teg" /><br>
-        <input type="submit" value="Найти" />
-    }
-</p>
 <table class="table">
     <tr>
         <th>
@@ -34,8 +26,9 @@
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
         <td>
-            @Html.ActionLink("Download", "GetFile" , item) 
+            @Html.ActionLink("Download", "GetFile", item)
         </td>
+
     </tr>
 }
 

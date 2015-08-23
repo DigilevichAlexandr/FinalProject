@@ -11,6 +11,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            Session["Lastfilename"] = "";
             return View();
         }        
 

@@ -397,6 +397,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session["Lastfilename"] = "";
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
@@ -440,20 +441,11 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         {
             if (upload != null)
             {
-                // получаем имя файла
                 string fileName = System.IO.Path.GetFileName(upload.FileName);
-                // сохраняем файл в папку Files в проекте
-                //var dir = new DirectoryInfo("~/Files/");
-                //var v = User.Identity.Name.ToString();
-                //dir.CreateSubdirectory(User.Identity.Name.ToString());
-                //dir.CreateSubdirectory("Subdir");
                 string path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath+"Files\\"+User.Identity.Name.ToString();
                 Directory.CreateDirectory(path);
-                upload.SaveAs(Server.MapPath("~/Files/"+ User.Identity.Name.ToString()+"/"+fileName));                
-                //var db = new 
+                upload.SaveAs(Server.MapPath("~/Files/"+ User.Identity.Name.ToString()+"/"+fileName));
                 var db = new FileContext();
-                //try
-                //{
                 var role = db.StoredFiles.Where(f => f.Name == fileName).FirstOrDefault();
                 if (role != null)
                 {
@@ -462,16 +454,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 }
                 Session["Lastfilename"] = fileName;
                 db.StoredFiles.Add(new StoredFile() {Name=fileName,UserName = User.Identity.Name.ToString() });
-                //}
-                //catch
-                //{
-                //    return View();
-                //}
-                //finally
-                //{
                     db.SaveChanges();
-                //}
-                               
             }
             return View();
         }
@@ -492,8 +475,21 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             return View(db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString()));
         }
 
+        [HttpGet]
+        public ActionResult Search()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Search(string teg)
+        {
+            var db = new FileContext();
+            return View(db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString() && f.Name.StartsWith(teg)));
+        }
+
         #region Helpers
-        // Used for XSRF protection when adding external logins
+            // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager
