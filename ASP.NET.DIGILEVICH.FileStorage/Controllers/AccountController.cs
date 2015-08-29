@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ASP.NET.DIGILEVICH.FileStorage.Models;
 using System.IO;
+using System.Collections.Generic;
 
 namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
 {
@@ -487,9 +488,31 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             var db = new FileContext();
             return View(db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString() && f.Name.StartsWith(teg)));
         }
+                
+        public ActionResult PrivateZone()
+        {
+            if (User.IsInRole("admin"))
+            {
+                return View(UserManager.Users);
+            }
+                
+            else
+                return RedirectToAction("GoAway");          
+        }
+
+        public ActionResult GoAway()
+        {
+            return View(User);
+        }
+
+        public ActionResult UserBecomeAdmin(ApplicationUser u)
+        {
+            UserManager.AddToRoles(u.Id,"admin");
+            return View(User);
+        }
 
         #region Helpers
-            // Used for XSRF protection when adding external logins
+        // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager

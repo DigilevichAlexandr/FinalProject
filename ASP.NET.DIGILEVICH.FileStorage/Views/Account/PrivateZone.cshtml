@@ -1,0 +1,31 @@
+﻿@model  IEnumerable<ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser>
+@{
+    ViewBag.Title = "PrivateZone";
+}
+
+<h2>Users</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Email Adress
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser item in Model)
+    {
+        <tr>
+            <td>
+                @item.Email
+            </td>
+
+            <td>
+                @Html.ActionLink("Make admin", "UserBecomeAdmin",item)
+            </td>
+
+        </tr>
+    }
+
+</table>
+
