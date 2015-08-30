@@ -491,9 +491,11 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 
         public ActionResult PrivateZone()
         {
+            
             if (User.IsInRole("admin"))
             {
-                return View(UserManager.Users);
+                List<ApplicationUser> ul = new List<ApplicationUser>(UserManager.Users.Where(u=>u.Roles.Count==0));
+                return View(ul);
             }
                 
             else
@@ -508,7 +510,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         public ActionResult UserBecomeAdmin(ApplicationUser u)
         {
             UserManager.AddToRoles(u.Id,"admin");
-            return View(User);
+            return View(u);
         }
 
         #region Helpers
