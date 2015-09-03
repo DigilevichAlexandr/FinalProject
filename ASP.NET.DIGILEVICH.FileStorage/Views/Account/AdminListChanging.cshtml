@@ -1,11 +1,11 @@
-﻿@model  IEnumerable<ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser>
+﻿
 @{
-    ViewBag.Title = "PrivateZone";
+    ViewBag.Title = "AdminListChanging";
 }
 
-<h2>Users</h2>
+<h2>AdminListChanging</h2>
 
-@Html.ActionLink("List of admins", "AdminListChanging")
+@Html.ActionLink("Return to list of users", "PrivateZone")
 
 <table class="table">
     <tr>
@@ -22,13 +22,10 @@
             </td>
 
             <td>
-                @Html.ActionLink("Make admin", "UserBecomeAdmin", item)
+                @Html.ActionLink("Make user", "AdminBecomeUser", item)
             </td>
 
         </tr>
     }
 
 </table>
-
-
-

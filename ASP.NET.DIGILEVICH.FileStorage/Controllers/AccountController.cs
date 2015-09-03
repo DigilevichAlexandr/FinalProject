@@ -502,6 +502,19 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 return RedirectToAction("GoAway");          
         }
 
+        public ActionResult AdminListChanging()
+        {
+
+            if (User.IsInRole("admin"))
+            {
+                List<ApplicationUser> ul = new List<ApplicationUser>(UserManager.Users.Where(u => u.Roles.Count != 0));
+                return View(ul);
+            }
+
+            else
+                return RedirectToAction("GoAway");
+        }
+
         public ActionResult GoAway()
         {
             return View(User);
@@ -510,6 +523,12 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         public ActionResult UserBecomeAdmin(ApplicationUser u)
         {
             UserManager.AddToRoles(u.Id,"admin");
+            return View(u);
+        }
+
+        public ActionResult AdminBecomeUser(ApplicationUser u)
+        {
+            UserManager.RemoveFromRole(u.Id,"admin");
             return View(u);
         }
 

@@ -248,6 +248,8 @@
     <Content Include="Views\Account\GoAway.cshtml" />
     <Content Include="Views\Account\PrivateZone.cshtml" />
     <Content Include="Views\Account\UserBecomeAdmin.cshtml" />
+    <Content Include="Views\Account\AdminListChanging.cshtml" />
+    <Content Include="Views\Account\AdminBecomeUser.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
