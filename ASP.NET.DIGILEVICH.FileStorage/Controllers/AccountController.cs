@@ -494,42 +494,87 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             
             if (User.IsInRole("admin"))
             {
-                List<ApplicationUser> ul = new List<ApplicationUser>(UserManager.Users.Where(u=>u.Roles.Count==0));
-                return View(ul);
+                //List<ApplicationUser> ul = new List<ApplicationUser>(UserManager.Users.Where(u=>u.Roles.Count==0));
+                //return View(ul);
+                return View();
+
             }
                 
             else
                 return RedirectToAction("GoAway");          
         }
 
-        public ActionResult AdminListChanging()
+        [HttpPost]
+        public ActionResult PrivateZone(string id)
         {
 
             if (User.IsInRole("admin"))
             {
-                List<ApplicationUser> ul = new List<ApplicationUser>(UserManager.Users.Where(u => u.Roles.Count != 0));
-                return View(ul);
+                return View("PrivateZone",(object)id);
             }
 
             else
                 return RedirectToAction("GoAway");
         }
 
+        //public ActionResult AdminListChanging()
+        //{
+
+        //    if (User.IsInRole("admin"))
+        //    {
+        //        List<ApplicationUser> ul = new List<ApplicationUser>(UserManager.Users.Where(u => u.Roles.Count != 0));
+        //        return View(ul);
+        //    }
+
+        //    else
+        //        return RedirectToAction("GoAway");
+        //}
+
         public ActionResult GoAway()
         {
             return View(User);
         }
 
-        public ActionResult UserBecomeAdmin(ApplicationUser u)
+        //public ActionResult UserBecomeAdmin(ApplicationUser u)
+        //{
+        //    UserManager.AddToRoles(u.Id,"admin");
+        //    return View(u);
+        //}
+
+        //public ActionResult AdminBecomeUser(ApplicationUser u)
+        //{
+        //    UserManager.RemoveFromRole(u.Id,"admin");
+        //    return View(u);
+        //}
+
+        public ActionResult OrderData(string id)
         {
-            UserManager.AddToRoles(u.Id,"admin");
-            return View(u);
+            var data=new List<ApplicationUser>();
+            if (!string.IsNullOrEmpty(id) && id != "All")
+                if(id=="User")
+                    data.AddRange(UserManager.Users.Where(u => u.Roles.Count == 0));
+                else
+                    data.AddRange(UserManager.Users.Where(u => u.Roles.Count != 0));
+            else
+                data.AddRange(UserManager.Users);
+            return PartialView(data);
         }
 
-        public ActionResult AdminBecomeUser(ApplicationUser u)
+        public ActionResult ChangeRole(ApplicationUser u)
         {
-            UserManager.RemoveFromRole(u.Id,"admin");
-            return View(u);
+            string id;
+            if (UserManager.IsInRole(u.Id, "admin"))
+            {
+                UserManager.RemoveFromRole(u.Id, "admin");
+                id = "Admin";
+            }
+                
+            else
+            {
+                UserManager.AddToRole(u.Id, "admin");
+                id = "User";
+            }                
+            return RedirectToAction("PrivateZone", "Account", id);
         }
 
         #region Helpers

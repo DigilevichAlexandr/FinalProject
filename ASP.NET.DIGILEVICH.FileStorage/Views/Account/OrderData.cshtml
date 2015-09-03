@@ -1,0 +1,15 @@
+﻿@model  IEnumerable<ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser>
+
+@foreach (ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser item in Model)
+{
+    <tr>
+        <td>
+            @item.Email
+        </td>
+
+        <td>
+            @Html.ActionLink("Change role", "ChangeRole", item)
+        </td>
+
+    </tr>
+}
