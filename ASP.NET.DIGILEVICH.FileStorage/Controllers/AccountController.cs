@@ -455,7 +455,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 }
                 Session["Lastfilename"] = fileName;
                 db.StoredFiles.Add(new StoredFile() {Name=fileName,UserName = User.Identity.Name.ToString() });
-                    db.SaveChanges();
+                db.SaveChanges();
             }
             return View();
         }
@@ -468,6 +468,15 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             string file_type = "application/"+extention;
             string file_name = filename;
             return File(file_path, file_type, file_name);
+        }
+
+        public ActionResult DelFile(StoredFile file)
+        {
+            var db = new FileContext();
+            var fl = db.StoredFiles.Single(f => f.Id == file.Id);
+            db.StoredFiles.Remove(fl);
+            db.SaveChanges();
+            return RedirectToAction("AllFiles");
         }
 
         public ActionResult AllFiles()
@@ -517,35 +526,10 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 return RedirectToAction("GoAway");
         }
 
-        //public ActionResult AdminListChanging()
-        //{
-
-        //    if (User.IsInRole("admin"))
-        //    {
-        //        List<ApplicationUser> ul = new List<ApplicationUser>(UserManager.Users.Where(u => u.Roles.Count != 0));
-        //        return View(ul);
-        //    }
-
-        //    else
-        //        return RedirectToAction("GoAway");
-        //}
-
         public ActionResult GoAway()
         {
             return View(User);
         }
-
-        //public ActionResult UserBecomeAdmin(ApplicationUser u)
-        //{
-        //    UserManager.AddToRoles(u.Id,"admin");
-        //    return View(u);
-        //}
-
-        //public ActionResult AdminBecomeUser(ApplicationUser u)
-        //{
-        //    UserManager.RemoveFromRole(u.Id,"admin");
-        //    return View(u);
-        //}
 
         public ActionResult OrderData(string id)
         {

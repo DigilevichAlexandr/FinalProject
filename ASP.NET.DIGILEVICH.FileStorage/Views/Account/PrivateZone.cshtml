@@ -9,44 +9,33 @@
         };
 }
 
-@using (Ajax.BeginForm(options))
+<div class="jumbotron">
+    @using (Ajax.BeginForm(options))
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Email Adress
+                </th>
+            </tr>
+
+            <tbody id="tabledata">
+                @Html.Action("OrderData", new { id = Model })
+            </tbody>
+
+        </table>
+
+        <p style="color:#333333;padding:10px">
+            @Html.DropDownList("id", new SelectList(new[] { "All", "User", "Admin" }, Model ?? "All"))
+            <input  type="submit" value="Submit" />
+        </p>
+
+    }
+
+    @section scripts
 {
-    <table class="table">
-        <tr>
-            <th>
-                Email Adress
-            </th>
-        </tr>
+        <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+        @*<script>alert("hello")</script>*@
+    }
 
-        <tbody id="tabledata">
-            @Html.Action("OrderData", new { id = Model })
-        </tbody>
-
-        @*@foreach (ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser item in Model)
-            {
-                <tr>
-                    <td>
-                        @item.Email
-                    </td>
-
-                    <td>
-                        @Html.ActionLink("Make admin", "UserBecomeAdmin", item)
-                    </td>       
-
-                </tr>
-            }*@
-
-    </table>
-
-    <p>
-        @Html.DropDownList("id", new SelectList(new[] { "All", "User", "Admin" }, Model ?? "All"))
-        <input type="submit" value="Submit" />
-    </p>
-
-}
-
-@section scripts
-{    
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-}
-
+</div>

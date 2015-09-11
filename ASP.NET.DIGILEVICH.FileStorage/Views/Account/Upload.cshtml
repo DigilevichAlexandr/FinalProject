@@ -3,11 +3,13 @@
     ViewBag.Title = "Upload";
 }
 
-<div>Last uploaded file @Session["Lastfilename"]</div>
+<div class="jumbotron">
+    <div>Last uploaded file @Session["Lastfilename"]</div>
 
-<h3>Выберите файл для загрузки</h3>
-@using (Html.BeginForm("Upload", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <input type="file" name="upload" /><br>
-    <input type="submit" value="Загрузить" />
-}
+    <h3>Select a file for download</h3>
+    @using (Html.BeginForm("Upload", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input lang="en" type="file" value="ChooseFile" name="upload" /><br>
+        <input type="submit" value="UploadFile" />
+    }
+</div>

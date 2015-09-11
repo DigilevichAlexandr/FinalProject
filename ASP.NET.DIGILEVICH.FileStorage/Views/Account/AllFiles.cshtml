@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "AllFiles";
 }
-
+<div class="jumbotron">
 <h2>AllFiles</h2>
 
 <p>
@@ -36,7 +36,12 @@
         <td>
             @Html.ActionLink("Download", "GetFile" , item) 
         </td>
+        <td>
+            @Html.ActionLink("Delete", "DelFile", item)
+        </td>
+
     </tr>
 }
 
 </table>
+</div>
