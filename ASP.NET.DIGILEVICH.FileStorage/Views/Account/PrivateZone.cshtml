@@ -1,5 +1,4 @@
-﻿@*@model  IEnumerable<ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser>*@
-@{
+﻿@{
         ViewBag.Title = "PrivateZone";
 
         var options = new AjaxOptions()
@@ -23,13 +22,16 @@
                 @Html.Action("OrderData", new { id = Model })
             </tbody>
 
+
+            <tr>
+                <td>
+                    <p style="color:#333333;padding:10px">
+                        @Html.DropDownList("id", new SelectList(new[] { "All", "User", "Admin" }, Model ?? "All"))
+                        <input type="submit" value="Submit" />
+                    </p>
+                </td>
+            </tr>
         </table>
-
-        <p style="color:#333333;padding:10px">
-            @Html.DropDownList("id", new SelectList(new[] { "All", "User", "Admin" }, Model ?? "All"))
-            <input  type="submit" value="Submit" />
-        </p>
-
     }
 
     @section scripts

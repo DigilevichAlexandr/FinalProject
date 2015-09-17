@@ -443,9 +443,9 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             if (upload != null)
             {
                 string fileName = System.IO.Path.GetFileName(upload.FileName);
-                string path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath+"Files\\"+User.Identity.Name.ToString();
+                string path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath+ "\\Image\\Files\\" + User.Identity.Name.ToString();
                 Directory.CreateDirectory(path);
-                upload.SaveAs(Server.MapPath("~/Files/"+ User.Identity.Name.ToString()+"/"+fileName));
+                upload.SaveAs(Server.MapPath("~/Image/Files/" + User.Identity.Name.ToString()+"/"+fileName));
                 var db = new FileContext();
                 var role = db.StoredFiles.Where(f => f.Name == fileName).FirstOrDefault();
                 if (role != null)
@@ -461,9 +461,9 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         }
 
         public FileResult GetFile(StoredFile file)
-        {
+         {
             string filename = file.Name;
-            string file_path = Server.MapPath("~/Files/" + User.Identity.Name.ToString() + "/" + filename);
+            string file_path = Server.MapPath("~/Image/Files/" + User.Identity.Name.ToString() + "/" + filename);
             string extention = filename.Remove(0,filename.Length - 3);
             string file_type = "application/"+extention;
             string file_name = filename;
@@ -480,9 +480,29 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         }
 
         public ActionResult AllFiles()
+        {           
+            return View();
+        }
+
+        public ActionResult OrderFiles(int n = 0)
         {
+            if (n < 0)
+                n = 0;
+            if (n>0)
+            {
+                n--;
+                n *= 10;
+            }
+            
             var db = new FileContext();
-            return View(db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString()));
+            List<StoredFile> to10el = new List<StoredFile>();
+            List<StoredFile> allsfs = new List<StoredFile>(db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString()));
+            for(int i = n;i<allsfs.Count && to10el.Count < 10;i++)
+            {
+                to10el.Add(allsfs[i]);
+            }
+            //Session["NumFiles"] = allsfs.Count / 10;
+            return PartialView(to10el);
         }
 
         [HttpGet]

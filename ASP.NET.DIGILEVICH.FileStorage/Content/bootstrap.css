@@ -19,7 +19,7 @@ html {
 }
 body {
 
-  margin: 0;
+  margin: 0; 
 
 }
 article,
@@ -1103,13 +1103,12 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #dd4814;
+  color: #772953;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #97310e;
-  text-decoration: underline;
+  color: #a33871;
 }
 a:focus {
   outline: thin dotted;
@@ -3064,7 +3063,7 @@ fieldset[disabled] a.btn {
 }
 .btn-default {
   color: #ffffff;
-  background-color: #aea79f;
+  background-color: #772953;
   border-color: #aea79f;
 }
 .btn-default:focus,
@@ -3075,7 +3074,7 @@ fieldset[disabled] a.btn {
 }
 .btn-default:hover {
   color: #ffffff;
-  background-color: #978e83;
+  background-color: #a43872;
   border-color: #92897e;
 }
 .btn-default:active,

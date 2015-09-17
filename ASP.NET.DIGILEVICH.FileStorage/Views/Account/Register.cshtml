@@ -5,6 +5,7 @@
 
 <h2>@ViewBag.Title.</h2>
 
+<div class="jumbotron">
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -35,6 +36,7 @@
         </div>
     </div>
 }
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

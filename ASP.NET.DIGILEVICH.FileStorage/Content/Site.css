@@ -1,9 +1,10 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-image: url('../Image/imgres4.jpg');
+    background:no-repeat center top;
+    background-image: url('../Image/imgres4.jpg') ;
     background-attachment: fixed;
-    background-repeat: inherit;
+
 }
 
 /* Set padding to keep content from hitting the edges */
