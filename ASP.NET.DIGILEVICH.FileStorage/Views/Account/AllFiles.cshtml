@@ -10,15 +10,28 @@
 <div class="jumbotron">
 <h2>AllFiles</h2>
 
-<p>
-    <h3>File search</h3>
-    @using (Html.BeginForm("Search", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <input type="text" name="teg" /><br>
-        <input type="submit" value="Find" />
-    }
-</p>
+
     <table class="table">
+        <tr>
+            <th colspan="2">
+                <p style="color:#333333;padding:10px">
+                    <h3>Number of page</h3>
+                    <input type="text" name="n" size="3" />
+                    <input type="submit" value="Submit" />
+                </p>
+            </th>
+
+            <th colspan="3">
+                <p>
+                    <h3>File search</h3>
+                    @using (Html.BeginForm("Search", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <input type="text" name="teg" /><br>
+                        <input type="submit" value="Find" />
+                    }
+                </p>
+            </th>
+        </tr>
 
         @using (Ajax.BeginForm(options))
         {
@@ -29,7 +42,10 @@
                 <th>
                     User name
                 </th>
-            </tr>
+                <th></th>
+                <th></th>
+                <th></th>
+</tr>
 
             <tbody id="tabledata">
                 @Html.Action("OrderFiles")
