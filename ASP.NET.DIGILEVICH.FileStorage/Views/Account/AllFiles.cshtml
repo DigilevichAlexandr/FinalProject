@@ -8,33 +8,32 @@
     };
 }
 <div class="jumbotron">
-<h2>AllFiles</h2>
+    <h2>AllFiles</h2>
+    @using (Ajax.BeginForm(options))
+            {
+        <table class="table">
+            <tr>
+                <th colspan="2">
+                    <p style="color:#333333;padding:10px">
+                        <h3>Number of page</h3>
+                        <input id="i1" type="text" value="" name="n1" size="3" />                    
+                        <input type="submit" value="Submit" />
+                    </p>
+                </th>
+                <th colspan="3">
+                    <p>
+                        <h3>File search</h3>
+                        @using (Html.BeginForm("Search", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                            <input type="text" value="" name="teg" /><br>
+                            <input type="submit" value="Find" />
+                        }
+                    </p>
+                </th>
+            </tr>
 
 
-    <table class="table">
-        <tr>
-            <th colspan="2">
-                <p style="color:#333333;padding:10px">
-                    <h3>Number of page</h3>
-                    <input type="text" name="n" size="3" />
-                    <input type="submit" value="Submit" />
-                </p>
-            </th>
 
-            <th colspan="3">
-                <p>
-                    <h3>File search</h3>
-                    @using (Html.BeginForm("Search", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        <input type="text" name="teg" /><br>
-                        <input type="submit" value="Find" />
-                    }
-                </p>
-            </th>
-        </tr>
-
-        @using (Ajax.BeginForm(options))
-        {
             <tr>
                 <th>
                     File name
@@ -45,9 +44,9 @@
                 <th></th>
                 <th></th>
                 <th></th>
-</tr>
 
-            <tbody id="tabledata">
+
+            <tbody id="tabledata">                
                 @Html.Action("OrderFiles")
             </tbody>
 
@@ -55,11 +54,11 @@
                 <th>
                     <p style="color:#333333;padding:10px">
                         <h3>Number of page</h3>
-                        <input type="text" name="n" size="3" />
+                        <input id="i2" type="text" name="n2" size="3" />
                         <input type="submit" value="Submit" />
                     </p>
                 </th>
             </tr>
-        }
-    </table>
+        </table>
+    }
 </div>

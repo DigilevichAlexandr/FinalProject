@@ -24,7 +24,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +36,9 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -122,7 +122,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -157,7 +157,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -443,9 +443,9 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             if (upload != null)
             {
                 string fileName = System.IO.Path.GetFileName(upload.FileName);
-                string path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath+ "\\Image\\Files\\" + User.Identity.Name.ToString();
+                string path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + "\\Image\\Files\\" + User.Identity.Name.ToString();
                 Directory.CreateDirectory(path);
-                upload.SaveAs(Server.MapPath("~/Image/Files/" + User.Identity.Name.ToString()+"/"+fileName));
+                upload.SaveAs(Server.MapPath("~/Image/Files/" + User.Identity.Name.ToString() + "/" + fileName));
                 var db = new FileContext();
                 var role = db.StoredFiles.Where(f => f.Name == fileName).FirstOrDefault();
                 if (role != null)
@@ -454,18 +454,18 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                     return View();
                 }
                 Session["Lastfilename"] = fileName;
-                db.StoredFiles.Add(new StoredFile() {Name=fileName,UserName = User.Identity.Name.ToString() });
+                db.StoredFiles.Add(new StoredFile() { Name = fileName, UserName = User.Identity.Name.ToString() });
                 db.SaveChanges();
             }
             return View();
         }
 
         public FileResult GetFile(StoredFile file)
-         {
+        {
             string filename = file.Name;
             string file_path = Server.MapPath("~/Image/Files/" + User.Identity.Name.ToString() + "/" + filename);
-            string extention = filename.Remove(0,filename.Length - 3);
-            string file_type = "application/"+extention;
+            string extention = filename.Remove(0, filename.Length - 3);
+            string file_type = "application/" + extention;
             string file_name = filename;
             return File(file_path, file_type, file_name);
         }
@@ -480,29 +480,41 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         }
 
         public ActionResult AllFiles()
-        {           
+        {
+            //ViewBag.Page = 1;
             return View();
         }
 
-        public ActionResult OrderFiles(int n = 0)
+        public ActionResult OrderFiles(int n1 = 0,int n2 = 0)
         {
-            if (n < 0)
-                n = 0;
-            if (n>0)
+            int n = 0;
+            if (n1 == 0)
+                n = n2;
+            else
+                n = n1;
+            if (n==0)
+                ViewBag.Page = 1;
+            else
+                ViewBag.Page = n;
+            if (n > 0)
             {
                 n--;
                 n *= 10;
             }
-            
+
             var db = new FileContext();
             List<StoredFile> to10el = new List<StoredFile>();
             List<StoredFile> allsfs = new List<StoredFile>(db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString()));
-            for(int i = n;i<allsfs.Count && to10el.Count < 10;i++)
+            if (n < allsfs.Count)
             {
-                to10el.Add(allsfs[i]);
+                for (int i = n; i < allsfs.Count && to10el.Count < 10; i++)
+                {
+                    to10el.Add(allsfs[i]);
+                }
+                //Session["NumFiles"] = allsfs.Count / 10;
+                return PartialView(to10el);
             }
-            //Session["NumFiles"] = allsfs.Count / 10;
-            return PartialView(to10el);
+            return Redirect("AllFiles");
         }
 
         [HttpGet]
@@ -517,10 +529,10 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             var db = new FileContext();
             return View(db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString() && f.Name.StartsWith(teg)));
         }
-                
+
         public ActionResult PrivateZone()
         {
-            
+
             if (User.IsInRole("admin"))
             {
                 //List<ApplicationUser> ul = new List<ApplicationUser>(UserManager.Users.Where(u=>u.Roles.Count==0));
@@ -528,9 +540,9 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 return View();
 
             }
-                
+
             else
-                return RedirectToAction("GoAway");          
+                return RedirectToAction("GoAway");
         }
 
         [HttpPost]
@@ -539,7 +551,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
 
             if (User.IsInRole("admin"))
             {
-                return View("PrivateZone",(object)id);
+                return View("PrivateZone", (object)id);
             }
 
             else
@@ -553,9 +565,9 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
 
         public ActionResult OrderData(string id)
         {
-            var data=new List<ApplicationUser>();
+            var data = new List<ApplicationUser>();
             if (!string.IsNullOrEmpty(id) && id != "All")
-                if(id=="User")
+                if (id == "User")
                     data.AddRange(UserManager.Users.Where(u => u.Roles.Count == 0));
                 else
                     data.AddRange(UserManager.Users.Where(u => u.Roles.Count != 0));
@@ -572,12 +584,12 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 UserManager.RemoveFromRole(u.Id, "admin");
                 id = "Admin";
             }
-                
+
             else
             {
                 UserManager.AddToRole(u.Id, "admin");
                 id = "User";
-            }                
+            }
             return RedirectToAction("PrivateZone", "Account", id);
         }
 
