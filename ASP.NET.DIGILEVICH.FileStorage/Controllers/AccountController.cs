@@ -398,7 +398,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            Session["Lastfilename"] = "";
+            Session["Lastfilename"] = "You can upload only: .txt, .png, .jpg, .pdf, .zip";
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
@@ -438,26 +438,52 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase upload)
+        public ActionResult Upload(HttpPostedFileBase file)
         {
-            if (upload != null)
+            //string fileName = Guid.NewGuid().ToString();
+            //string extention = Path.GetExtension(file.FileName);
+            //fileName += extention;
+
+            //List<string> extentions = new List<string>() { ".txt", ".png", ".jpg", ".pdf", ".zip" };
+            //if(extentions.Contains(extention))
+            //{
+            //    file.SaveAs(Server.MapPath("/ Image / Files /" + User.Identity.Name.ToString() + "/" + fileName));
+
+            //    ViewBag.Message = "file saved";
+            //}
+            //else
+            //{
+            //    ViewBag.Message = "Extetion is not supported. You can upload only: .txt, .png, .jpg, .pdf, .zip";
+            //}
+
+            if (file != null)
             {
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
-                string path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + "\\Image\\Files\\" + User.Identity.Name.ToString();
-                Directory.CreateDirectory(path);
-                upload.SaveAs(Server.MapPath("~/Image/Files/" + User.Identity.Name.ToString() + "/" + fileName));
-                var db = new FileContext();
-                var role = db.StoredFiles.Where(f => f.Name == fileName).FirstOrDefault();
-                if (role != null)
+                string fileName = System.IO.Path.GetFileName(file.FileName);
+                string extention = Path.GetExtension(file.FileName);
+                List<string> extentions = new List<string>() { ".txt", ".png", ".jpg", ".pdf", ".zip" };
+
+                if (extentions.Contains(extention))
                 {
-                    Session["Lastfilename"] = "";
-                    return View();
+                    string path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + "\\Image\\Files\\" + User.Identity.Name.ToString();
+                    Directory.CreateDirectory(path);
+                    file.SaveAs(Server.MapPath("~/Image/Files/" + User.Identity.Name.ToString() + "/" + fileName));
+                    var db = new FileContext();
+                    var role = db.StoredFiles.Where(f => f.Name == fileName).FirstOrDefault();
+                    if (role != null)
+                    {
+                        Session["Lastfilename"] = "";
+                        return View();
+                    }
+                    Session["Lastfilename"] = "Last uploaded file"+fileName;
+                    db.StoredFiles.Add(new StoredFile() { Name = fileName, UserName = User.Identity.Name.ToString() });
+                    db.SaveChanges();
                 }
-                Session["Lastfilename"] = fileName;
-                db.StoredFiles.Add(new StoredFile() { Name = fileName, UserName = User.Identity.Name.ToString() });
-                db.SaveChanges();
+                else
+                {
+                    Session["Lastfilename"] = "Extetion is not supported. You can upload only: .txt, .png, .jpg, .pdf, .zip";
+                }
             }
-            return View();
+                return View();
         }
 
         public FileResult GetFile(StoredFile file)
@@ -485,14 +511,14 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
             return View();
         }
 
-        public ActionResult OrderFiles(int n1 = 0,int n2 = 0)
+        public ActionResult OrderFiles(int n1 = 0, int n2 = 0)
         {
             int n = 0;
             if (n1 == 0)
                 n = n2;
             else
                 n = n1;
-            if (n==0)
+            if (n == 0)
                 ViewBag.Page = 1;
             else
                 ViewBag.Page = n;
@@ -566,13 +592,26 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         public ActionResult OrderData(string id)
         {
             var data = new List<ApplicationUser>();
+            List<string> roles = new List<string>();
             if (!string.IsNullOrEmpty(id) && id != "All")
+            {
                 if (id == "User")
                     data.AddRange(UserManager.Users.Where(u => u.Roles.Count == 0));
                 else
                     data.AddRange(UserManager.Users.Where(u => u.Roles.Count != 0));
+            }
             else
+            {                
                 data.AddRange(UserManager.Users);
+                foreach(ApplicationUser u in data)
+                {
+                    if (u.Roles.Count == 0)
+                        roles.Add("User");
+                    else
+                        roles.Add("Admin");
+                }                
+            }
+            ViewBag.Roles = roles;
             return PartialView(data);
         }
 
@@ -591,6 +630,12 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 id = "User";
             }
             return RedirectToAction("PrivateZone", "Account", id);
+        }
+
+        public ActionResult DeletePerson(ApplicationUser u)
+        {
+            UserManager.DeleteAsync(u);
+            return RedirectToAction("PrivateZone");
         }
 
         #region Helpers

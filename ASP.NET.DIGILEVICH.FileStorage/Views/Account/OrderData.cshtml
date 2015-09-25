@@ -1,16 +1,30 @@
 ﻿@model  IEnumerable<ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser>
 
-@foreach (ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser item in Model)
-{
+@*@{ 
+    var grid = new WebGrid(Model);
+}*@
+@{
+    int i = 0;
+    bool vne = ViewBag.Roles != null;
+    foreach (ASP.NET.DIGILEVICH.FileStorage.Models.ApplicationUser item in Model)
+    {
     <tr>
         <td>
             @item.Email
         </td>
-
+        <td>
+            @if (vne) {
+                @ViewBag.Roles[i++]
+                    }
+        </td>
         <td>
             @Html.ActionLink("Change role", "ChangeRole", item)
         </td>
-
+        <td>
+            @Html.ActionLink("Delete", "DeletePerson", item)
+        </td>
     </tr>
-}
-  
+        }
+    }
+
+@*@grid.GetHtml()*@

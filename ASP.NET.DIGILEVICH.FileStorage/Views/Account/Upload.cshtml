@@ -4,12 +4,12 @@
 }
 
 <div class="jumbotron">
-    <div>Last uploaded file @Session["Lastfilename"]</div>
+    <div>@Session["Lastfilename"]</div>
 
     <h3>Select a file for download</h3>
     @using (Html.BeginForm("Upload", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <input lang="en" type="file" value="ChooseFile" name="upload" /><br>
+        <input lang="en" type="file" value="ChooseFile" name="file" /><br>
         <input type="submit" value="UploadFile" />
     }
 </div>
