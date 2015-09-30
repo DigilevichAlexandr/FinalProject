@@ -486,6 +486,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 return View();
         }
 
+        [AllowAnonymous]
         public FileResult GetFile(StoredFile file)
         {
             string filename = file.Name;
@@ -537,10 +538,15 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                 {
                     to10el.Add(allsfs[i]);
                 }
-                //Session["NumFiles"] = allsfs.Count / 10;
                 return PartialView(to10el);
             }
             return Redirect("AllFiles");
+        }
+
+        [AllowAnonymous]
+        public ActionResult ShareLink(StoredFile file)
+        {
+            return View(file);
         }
 
         [HttpGet]
@@ -561,12 +567,8 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
 
             if (User.IsInRole("admin"))
             {
-                //List<ApplicationUser> ul = new List<ApplicationUser>(UserManager.Users.Where(u=>u.Roles.Count==0));
-                //return View(ul);
                 return View();
-
             }
-
             else
                 return RedirectToAction("GoAway");
         }
@@ -599,6 +601,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                     data.AddRange(UserManager.Users.Where(u => u.Roles.Count == 0));
                 else
                     data.AddRange(UserManager.Users.Where(u => u.Roles.Count != 0));
+                ViewBag.Roles = null;
             }
             else
             {                
@@ -609,9 +612,10 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
                         roles.Add("User");
                     else
                         roles.Add("Admin");
-                }                
+                }    
+                ViewBag.Roles = roles;        
             }
-            ViewBag.Roles = roles;
+            
             return PartialView(data);
         }
 
@@ -634,7 +638,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
 
         public ActionResult DeletePerson(ApplicationUser u)
         {
-            UserManager.DeleteAsync(u);
+            UserManager.Delete(u);
             return RedirectToAction("PrivateZone");
         }
 

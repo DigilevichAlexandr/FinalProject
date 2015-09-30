@@ -16,6 +16,7 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Models
             // Add custom user claims here
             return userIdentity;
         }
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

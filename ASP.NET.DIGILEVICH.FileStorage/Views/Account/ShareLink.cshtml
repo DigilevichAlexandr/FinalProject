@@ -1,0 +1,18 @@
+﻿@model ASP.NET.DIGILEVICH.FileStorage.Models.StoredFile
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShareLink</title>
+</head>
+<body>
+    <div> 
+        File name:
+        @Model.Name
+        Owner:
+        @Model.UserName
+    </div>
+    @Html.ActionLink("Download","GetFile",Model)
+</body>
+</html>

@@ -256,6 +256,7 @@
     <Content Include="Views\Account\OrderData.cshtml" />
     <Content Include="Views\Home\View.cshtml" />
     <Content Include="Views\Account\OrderFiles.cshtml" />
+    <Content Include="Views\Account\ShareLink.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Image\App_LocalResources\" />
