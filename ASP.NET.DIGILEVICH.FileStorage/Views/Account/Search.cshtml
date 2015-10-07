@@ -1,35 +1,45 @@
 ﻿@model IEnumerable<ASP.NET.DIGILEVICH.FileStorage.Models.StoredFile>
 
-@{
-    ViewBag.Title = "Search";
-}
+<tr>
+    <td colspan="5" style="text-align: center;">@ViewBag.Page</td>
+</tr>
+@foreach (var item in Model)
+{
 
-<h2>Найденные файлы</h2>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+            <br />
+            @Html.ActionLink(" Share", "ShareLink", item)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
         <td>
+            @{
+                string str = item.Name.Remove(0, item.Name.Length - 3);
+                string path = "~/Image/Files/" + item.UserName + "/" + item.Name;
+                if (str.Equals("jpg") || str.Equals("png"))
+                {
+                    <img src="@Url.Content(path)" width="50" />
+                }
+                if (str.Equals("txt"))
+                {
+                    string mappath = Server.MapPath(path);
+                    StreamReader rd = new StreamReader(mappath, System.Text.Encoding.Default);
+                    string allfile = rd.ReadToEnd();
+                    @:<textarea readonly="readonly">@Html.Raw(allfile)</textarea>
+                }
+            }
+        </td>
+        <td>
             @Html.ActionLink("Download", "GetFile", item)
         </td>
-
+        <td>
+            @Html.ActionLink("Delete", "DelFile", item)
+        </td>
     </tr>
-}
-
-</table>
+                }
+<tr>
+    <td colspan="5" style="text-align: center;">@ViewBag.Page</td>
+</tr>

@@ -6,34 +6,39 @@
         UpdateTargetId = "tabledata",
         Url = Url.Action("OrderFiles")
     };
+
+    var optionssearch = new AjaxOptions()
+    {
+        UpdateTargetId = "tabledata",
+        Url = Url.Action("Search")
+    };
 }
 <div class="jumbotron">
-    <h2>AllFiles</h2>    
+    <h2>AllFiles</h2>
+    <h3>File search</h3>
+    @using (Ajax.BeginForm(optionssearch))
+    {
+        <input type="text" name="teg" /><br>
+        <input type="submit" value="Submit" /><br>
+        <table class="table">
+            <tbody id="tabledata">
+                @Html.Action("Search")
+            </tbody>
+        </table>
+    }
+
     @using (Ajax.BeginForm(options))
-            {
+    {
         <table class="table">
             <tr>
                 <th colspan="2">
                     <p style="color:#333333;padding:10px">
                         <h3>Number of page</h3>
-                        <input id="i1" type="text" value="" name="n1" size="3" />                    
+                        <input id="i1" type="text" value="" name="n1" size="3" />
                         <input type="submit" value="Submit" />
                     </p>
                 </th>
-                <th colspan="3">
-                    <p>
-                        <h3>File search</h3>
-                        @using (Html.BeginForm("Search", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                            <input type="text" value="" name="teg" /><br>
-                            <input type="submit" value="Find" />
-                        }
-                    </p>
-                </th>
             </tr>
-
-
-
             <tr>
                 <th>
                     File name
@@ -44,9 +49,9 @@
                 <th></th>
                 <th></th>
                 <th></th>
+            </tr>
 
-
-            <tbody id="tabledata">                
+            <tbody id="tabledata">
                 @Html.Action("OrderFiles")
             </tbody>
 

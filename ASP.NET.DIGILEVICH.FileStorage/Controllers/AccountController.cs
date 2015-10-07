@@ -440,22 +440,6 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
-            //string fileName = Guid.NewGuid().ToString();
-            //string extention = Path.GetExtension(file.FileName);
-            //fileName += extention;
-
-            //List<string> extentions = new List<string>() { ".txt", ".png", ".jpg", ".pdf", ".zip" };
-            //if(extentions.Contains(extention))
-            //{
-            //    file.SaveAs(Server.MapPath("/ Image / Files /" + User.Identity.Name.ToString() + "/" + fileName));
-
-            //    ViewBag.Message = "file saved";
-            //}
-            //else
-            //{
-            //    ViewBag.Message = "Extetion is not supported. You can upload only: .txt, .png, .jpg, .pdf, .zip";
-            //}
-
             if (file != null)
             {
                 string fileName = System.IO.Path.GetFileName(file.FileName);
@@ -508,7 +492,6 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
 
         public ActionResult AllFiles()
         {
-            //ViewBag.Page = 1;
             return View();
         }
 
@@ -548,18 +531,20 @@ namespace ASP.NET.DIGILEVICH.FileStorage.Controllers
         {
             return View(file);
         }
-
+        
         [HttpGet]
         public ActionResult Search()
         {
-            return RedirectToAction("Index", "Home");
+            return null;
         }
-
         [HttpPost]
         public ActionResult Search(string teg)
         {
+            if (teg == "")
+                return null;
             var db = new FileContext();
-            return View(db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString() && f.Name.StartsWith(teg)));
+            var sorted = db.StoredFiles.Where(f => f.UserName == User.Identity.Name.ToString() && f.Name.StartsWith(teg));
+            return PartialView(sorted);
         }
 
         public ActionResult PrivateZone()
