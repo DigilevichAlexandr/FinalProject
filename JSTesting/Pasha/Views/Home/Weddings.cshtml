@@ -1,0 +1,119 @@
+﻿@using Pasha.Extentions
+@model IEnumerable<string>
+
+<style type="text/css">
+    a:link {
+        color: #ffffff;
+    }
+
+    a:visited {
+        color: #ffffff;
+    }
+
+    a:hover {
+        color: #ffffff;
+    }
+
+    #index {
+        width: 215px;
+    }
+
+    #exhibit {
+        margin-left: 215px;
+    }
+
+    #index, #exhibit {
+        font-size: 13px;
+    }
+
+    #index, #exhibit {
+        line-height: 13px;
+    }
+
+    .container {
+        padding-top: 27px;
+    }
+
+    .container {
+        padding-left: 28px;
+    }
+
+    #index, #exhibit {
+        color: #000;
+    }
+
+    #index, #exhibit {
+        font-family: Arial, Verdana, sans-serif;
+    }
+
+        #index ul.section span.section_title, #index ul.section span.section_title a, #index ul.section span.subsection_title, #index ul.section span.subsection_title a {
+            font-size: 13px;
+        }
+
+    #img-container {
+    }
+
+        #img-container #text {
+            float: left;
+            width: 285px;
+        }
+
+            #img-container #text p {
+                width: 250px;
+            }
+
+        #img-container .picture_holder {
+            float: left;
+        }
+
+        #img-container .picture {
+            position: relative;
+            text-align: center;
+        }
+
+        #img-container .picture {
+            height: 200px;
+        }
+
+        #img-container .picture_holder {
+            padding: 0 0 0 0;
+        }
+
+        #img-container .captioning {
+            height: 0px;
+            text-align: center;
+            width: 200px;
+        }
+
+            #img-container .captioning .title {
+                margin-top: 3px;
+                text-align: center;
+            }
+</style>
+
+@foreach (string pictureName in Model)
+{
+    <div class="picture_holder" style="width: 225px; height: 225px;">
+        <div class="picture" style="width: 200px;">
+            <div style="padding-top: 30px;">
+                @Html.ActionLinkImage("/Images/Weddings/" + pictureName, "", "link")
+                <a class="link" href="@Url.Action("Preview", new {name = pictureName})" title="">
+                    <img src="~/Images/Weddings/f5J9Uyz_-SI.jpg" />
+                </a>
+            </div>
+        </div>
+    </div>
+}
+
+@*@foreach (string pictureName in Model)
+    {
+        <div class="picture_holder" style="width: 225px; height: 225px;">
+            <div class="picture" style="width: 200px;">
+                <div style="padding-top: 30px;">
+                    <a href="@Html.Action("Preview",new {name = pictureName})" class="link">
+                        <img src="~/Images/Weddings/@pictureName" width="200" height="141">
+                    </a>
+                </div>
+            </div>
+        </div>
+    }*@

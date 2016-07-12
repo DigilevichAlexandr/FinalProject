@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,9 +22,14 @@ namespace PersistentConMvc.Controllers
         }
         public ActionResult Weddings()
         {
-            ViewBag.Message = "Your application description page.";
+            var dir = new DirectoryInfo("~/Images/Weddings");// папка с файлами 
+            var files = new List<string>(); // список для имен файлов 
+            foreach (FileInfo file in dir.GetFiles()) // извлекаем все файлы и кидаем их в список 
+            {
+                files.Add(file.FullName); // получаем полный путь к файлу и кидаем его в список 
+            }
 
-            return View();
+            return View(files);
         }
 
         public ActionResult Contact()

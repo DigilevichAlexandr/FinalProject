@@ -1,7 +1,14 @@
-﻿<div class="picture_holder" id="node2240" style="width: 225px; height: 225px;">
-    <div class="picture" style="width: 200px;">
-        <div style="padding-top: 30px;">
-            <a href="http://johnbalsom.com/indexhibit/index.php/menswear/new-work/JIMMY-CHOO-MAN-VISUAL-IN-STORE-POS-B-0_70.jpg" class="link"><img src="http://johnbalsom.com/indexhibit/files/gimgs/th-86_JIMMY-CHOO-MAN-VISUAL-IN-STORE-POS-B-0_70.jpg" width="200" height="141" alt="http://johnbalsom.com/indexhibit/files/gimgs/th-86_JIMMY-CHOO-MAN-VISUAL-IN-STORE-POS-B-0_70.jpg"></a>
+﻿@model IEnumerable<string>
+
+@foreach (string name in Model)
+{
+    <div class="picture_holder" id="node2240" style="width: 225px; height: 225px;">
+        <div class="picture" style="width: 200px;">
+            <div style="padding-top: 30px;">
+                <a href="http://johnbalsom.com/indexhibit/index.php/menswear/new-work/JIMMY-CHOO-MAN-VISUAL-IN-STORE-POS-B-0_70.jpg" class="link">
+                    <img src="~/Images/Weddings/@name" width="200" height="141" alt="http://johnbalsom.com/indexhibit/files/gimgs/th-86_JIMMY-CHOO-MAN-VISUAL-IN-STORE-POS-B-0_70.jpg">
+                </a>
+            </div>
         </div>
     </div>
-</div>
+}
