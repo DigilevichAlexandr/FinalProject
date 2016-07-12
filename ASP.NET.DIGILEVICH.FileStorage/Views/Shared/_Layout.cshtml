@@ -20,20 +20,20 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
+<div>
+    <div class="container">
         @RenderBody()
-        <hr />
-        <footer>
-            <p class="jumbotron">&copy; ASP.NET EPAM Digilevich Alexandr 2015.</p>
-        </footer>
     </div>
-
+    <hr/>
+    <footer>
+        <p class="jumbotron">&copy; ASP.NET EPAM Digilevich Alexandr 2015.</p>
+    </footer>
+</div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

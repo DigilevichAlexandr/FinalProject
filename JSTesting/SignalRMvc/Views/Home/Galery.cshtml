@@ -1,0 +1,33 @@
+﻿@model IEnumerable<string>
+@{
+    ViewBag.Title = "Galery";
+}
+
+<h2>Galery</h2>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script src="~/Scripts/click-carousel.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#container").clickCarousel({ margin: 10 });
+    });
+</script>
+
+<div class="navbar-collapse collapse">
+    <div id="wrapper">
+        <div id="container">
+            @foreach (string path in Model)
+            {
+                <img src="~/Images/@path" alt="Cuba" />
+            }
+        </div><!-- container -->
+        <img id="carouselLeft" src="~/leftArr.jpg" alt="Left Arrow" />
+        <img id="carouselRight" src="~/rightArr.jpg" alt="Right Arrow" />
+    </div><!-- wrapper -->
+</div>
+<div>
+    @foreach (string path in Model)
+         {
+             <img src="~/Images/@path"/>
+         }
+</div>

@@ -1,0 +1,98 @@
+/**
+* CSS
+* 
+* @version 2.0
+* @author Vaska 
+*
+* There are also some obscure rules in base.css
+*/
+
+body {
+	font-size: 10px;
+	font-family: Verdana;
+	background: #fff;
+	color: #000;
+	line-height: 1.3em;
+	font-weight: 150;
+	/* font-weight: 300; */
+}
+
+/* link scheme */
+/* you can customize links further down the page too */
+a:link { text-decoration: none; color: #000; }
+a:active { text-decoration: none; color: #00cc00; }
+a:visited { text-decoration: none; color: #999; }
+a:hover { text-decoration: underline; }
+a img { border: none; }
+
+/* general styles */
+small { font-size: 11px; }
+code { font-family: tahoma; }
+blockquote { padding-left: 11px; }
+
+/* headings */
+h1 { font-size: 11px; margin-bottom: 1em; }
+h2 { font-size: 11px; margin-bottom: 1em; }
+h3 { font-size: 11px; margin-bottom: 1em; }
+h4 { font-size: 11px; margin-bottom: 1em; }
+
+/* paragraph width */
+#index p { margin-bottom: 0em; }
+#exhibit p, code, blockquote { width: 450px; margin-bottom: 1em; /* line-height: 1.3em; */ }
+
+/* highlighter style - maybe you want to change colors? */
+.highlight { background: #ccff00; color: #000; }
+
+/* never adjust the margin or padding here unless you seriously know what you are doing */
+/* think #index .container and #exhibit .container for only padding adjustments */
+#index { width: 215px; background: #eeeeee; /* line-height: 1.3em; */ }
+#exhibit { margin: 0 0 0 215px; }
+
+/* styling the index */
+#index ul { list-style: none; margin: 0; }
+#index ul.section { margin-bottom: 1em; }
+#index ul.subsection {  }
+
+/* the follow rules for index are not required */
+/* they are mostly for complex customization */
+/* for tag display */
+#index ul#all_tags { list-style-type: none; margin-bottom: 1em; }
+#index ul#all_tags li { display: inline; margin-right: 3px; }
+#index ul#all_tags li a {  }
+
+/* active section title */
+#index span.active_section_title,
+#index span.active_section_title
+
+/* active exhibit title parts */
+li.active a:link, li a.active, li.active a:hover, li a.active, li.active a:active, li a.active, 
+li.active a:visited, li a.active, li span.active, #index ul.section li.active a:link, 
+#index ul.section li.active a:hover, #index ul.section li.active a:active, #index ul.section li.active a:visited
+
+
+/* additional #index options */
+#index ul li .password a { /* background: url(../img/locked.gif) right center no-repeat; padding-right: 18px; */ }
+
+/* the "new" indicator */
+#index ul li sup { color: #000000; font-weight: bold; text-transform: uppercase; font-size: 11px; vertical-align: top; }
+/* end styling for index */
+
+/* links styles only for the #index region */
+#index a:link { color: #000000; } 
+#index a:hover { color: #000000; } 
+#index a:active { color: #000000; } 
+#index a:visited { color: #000000; }
+
+
+/* links styles only for the #exhibit region */
+#exhibit a:link { color: #000000; } 
+#exhibit a:hover { color: #000000; } 
+#exhibit a:active { color: #000000; } 
+#exhibit a:visited { color: #000000; } 
+
+/* this is where you adjust your paddings for #index and #exhibit together */
+.container { padding: 27px 9px 25px 27px; }
+
+/* this is where you pad them separately */
+#index .container {  }
+#exhibit .container { padding: 45px }

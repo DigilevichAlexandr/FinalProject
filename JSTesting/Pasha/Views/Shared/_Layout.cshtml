@@ -1,0 +1,63 @@
+﻿<head>
+    <script src="~/Scripts/statistics.js"></script>
+    <script src="~/Scripts/jquery.js"></script>
+    <link href="~/Content/base.css" rel="stylesheet" />
+    <link href="~/Content/reset.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body class="exhibits section-11 exhibit-86 format-visual_index">
+    <div id="index">
+        <div class="container">
+            <div class="top">
+                <a href="http:///johnbalsom.com/indexhibit/"></a><p style="font-size:25px">
+                    @Html.ActionLink("Dubovik\n\nPavel", "Weddings")
+                </p>            <br>
+            </div>
+            <ul class="section active_section" id="section_11">
+                <li id="exhibit_86" class="exhibit_title active">@Html.ActionLink("Свадебное портфолио", "Ц")</li>
+            </ul>
+            <ul class="section" id="section_6">
+                <li id="exhibit_80" class="exhibit_title"><a href="http://johnbalsom.com/indexhibit/index.php/menswear/menswear/2/">MENSWEAR</a></li>
+            </ul>
+            <ul class="section" id="section_10">
+                <li id="exhibit_78" class="exhibit_title"><a href="http://johnbalsom.com/indexhibit/index.php/beauty/beauty/">BEAUTY</a></li>
+            </ul>
+            <ul class="section" id="section_7">
+                <li id="exhibit_79" class="exhibit_title"><a href="http://johnbalsom.com/indexhibit/index.php/documentary/documentary/">DOCUMENTARY</a></li>
+            </ul>
+            <ul class="section" id="section_8">
+                <li id="exhibit_11" class="exhibit_title"><a href="http://johnbalsom.com/indexhibit/index.php/sports/sports/">SPORTS</a></li>
+            </ul>
+            <ul class="section" id="section_9"></ul>
+            <ul class="section" id="section_5">
+                <li id="exhibit_108" class="exhibit_title"><a href="http://johnbalsom.com/indexhibit/index.php/moving-image/moving-image-2/">MOVING IMAGE</a></li>
+            </ul>
+            <ul class="section" id="section_1"></ul>
+            <ul class="section" id="section_14"></ul>
+
+            <div class="bot">
+                <b><a href="http://vk.com/dubovik_photo"><img src="~/Images/vk.png" /></a></b><br>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div id="exhibit">
+        <div class="container">
+
+            <div class="top"><!-- --></div>
+            <!-- text and image -->
+
+            <div id="img-container">
+                @RenderBody()
+
+                <!-- end text and image -->
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">do_statistics();</script>
+
+</body>
